@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/lines-between-class-members */
 import * as Sequelize from 'sequelize'
 import { DataTypes, Model, Optional } from 'sequelize'
+import type { nft, nftId } from './nft'
+import type { nft_transaction, nft_transactionId } from './nft_transaction'
 import type { token, tokenId } from './token'
+import type { transaction, transactionId } from './transaction'
 
 export interface userAttributes {
   id: number
@@ -14,6 +18,7 @@ export interface userAttributes {
   username?: string
   address?: string
   last_login_at?: Date
+  view?: number
   avatar?: string
 }
 
@@ -31,6 +36,7 @@ export type userOptionalAttributes =
   | 'username'
   | 'address'
   | 'last_login_at'
+  | 'view'
   | 'avatar'
 export type userCreationAttributes = Optional<
   userAttributes,
@@ -52,8 +58,54 @@ export class user
   username?: string
   address?: string
   last_login_at?: Date
+  view?: number
   avatar?: string
 
+  // user hasMany nft via user_id
+  nfts!: nft[]
+  getNfts!: Sequelize.HasManyGetAssociationsMixin<nft>
+  setNfts!: Sequelize.HasManySetAssociationsMixin<nft, nftId>
+  addNft!: Sequelize.HasManyAddAssociationMixin<nft, nftId>
+  addNfts!: Sequelize.HasManyAddAssociationsMixin<nft, nftId>
+  createNft!: Sequelize.HasManyCreateAssociationMixin<nft>
+  removeNft!: Sequelize.HasManyRemoveAssociationMixin<nft, nftId>
+  removeNfts!: Sequelize.HasManyRemoveAssociationsMixin<nft, nftId>
+  hasNft!: Sequelize.HasManyHasAssociationMixin<nft, nftId>
+  hasNfts!: Sequelize.HasManyHasAssociationsMixin<nft, nftId>
+  countNfts!: Sequelize.HasManyCountAssociationsMixin
+  // user hasMany nft_transaction via user_id
+  nft_transactions!: nft_transaction[]
+  getNft_transactions!: Sequelize.HasManyGetAssociationsMixin<nft_transaction>
+  setNft_transactions!: Sequelize.HasManySetAssociationsMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  addNft_transaction!: Sequelize.HasManyAddAssociationMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  addNft_transactions!: Sequelize.HasManyAddAssociationsMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  createNft_transaction!: Sequelize.HasManyCreateAssociationMixin<nft_transaction>
+  removeNft_transaction!: Sequelize.HasManyRemoveAssociationMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  removeNft_transactions!: Sequelize.HasManyRemoveAssociationsMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  hasNft_transaction!: Sequelize.HasManyHasAssociationMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  hasNft_transactions!: Sequelize.HasManyHasAssociationsMixin<
+    nft_transaction,
+    nft_transactionId
+  >
+  countNft_transactions!: Sequelize.HasManyCountAssociationsMixin
   // user hasMany token via user_id
   tokens!: token[]
   getTokens!: Sequelize.HasManyGetAssociationsMixin<token>
@@ -66,6 +118,72 @@ export class user
   hasToken!: Sequelize.HasManyHasAssociationMixin<token, tokenId>
   hasTokens!: Sequelize.HasManyHasAssociationsMixin<token, tokenId>
   countTokens!: Sequelize.HasManyCountAssociationsMixin
+  // user hasMany transaction via user_id_from
+  transactions!: transaction[]
+  getTransactions!: Sequelize.HasManyGetAssociationsMixin<transaction>
+  setTransactions!: Sequelize.HasManySetAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  addTransaction!: Sequelize.HasManyAddAssociationMixin<
+    transaction,
+    transactionId
+  >
+  addTransactions!: Sequelize.HasManyAddAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  createTransaction!: Sequelize.HasManyCreateAssociationMixin<transaction>
+  removeTransaction!: Sequelize.HasManyRemoveAssociationMixin<
+    transaction,
+    transactionId
+  >
+  removeTransactions!: Sequelize.HasManyRemoveAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  hasTransaction!: Sequelize.HasManyHasAssociationMixin<
+    transaction,
+    transactionId
+  >
+  hasTransactions!: Sequelize.HasManyHasAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  countTransactions!: Sequelize.HasManyCountAssociationsMixin
+  // user hasMany transaction via user_id_to
+  user_id_to_transactions!: transaction[]
+  getUser_id_to_transactions!: Sequelize.HasManyGetAssociationsMixin<transaction>
+  setUser_id_to_transactions!: Sequelize.HasManySetAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  addUser_id_to_transaction!: Sequelize.HasManyAddAssociationMixin<
+    transaction,
+    transactionId
+  >
+  addUser_id_to_transactions!: Sequelize.HasManyAddAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  createUser_id_to_transaction!: Sequelize.HasManyCreateAssociationMixin<transaction>
+  removeUser_id_to_transaction!: Sequelize.HasManyRemoveAssociationMixin<
+    transaction,
+    transactionId
+  >
+  removeUser_id_to_transactions!: Sequelize.HasManyRemoveAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  hasUser_id_to_transaction!: Sequelize.HasManyHasAssociationMixin<
+    transaction,
+    transactionId
+  >
+  hasUser_id_to_transactions!: Sequelize.HasManyHasAssociationsMixin<
+    transaction,
+    transactionId
+  >
+  countUser_id_to_transactions!: Sequelize.HasManyCountAssociationsMixin
 
   static initModel(sequelize: Sequelize.Sequelize): typeof user {
     return user.init(
@@ -117,6 +235,11 @@ export class user
         last_login_at: {
           type: DataTypes.DATE,
           allowNull: true
+        },
+        view: {
+          type: DataTypes.BIGINT,
+          allowNull: true,
+          defaultValue: 0
         },
         avatar: {
           type: DataTypes.STRING,

@@ -10,18 +10,9 @@ import swaggerUi from 'swagger-ui-express'
 import responseTime from 'response-time'
 import { RegisterRoutes } from '../build/routes'
 import { Constant, logRequest, logger, onError } from '@constants'
-import {
-  startSynchronizeDataFromSmartContract,
-  initialAdmin,
-  initialDatabase
-} from '@providers'
+import { initialAdmin, initialDatabase } from '@providers'
 import { type FieldErrors, ValidateError } from 'tsoa'
 import JSONBigint from 'json-bigint'
-
-/**
- * Starts the process of synchronizing data from a smart contract.
- */
-startSynchronizeDataFromSmartContract()
 
 /**
  * Initializes the database and creates an admin user with the default username.

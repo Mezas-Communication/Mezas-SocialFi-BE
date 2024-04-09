@@ -1,5 +1,14 @@
 import { Constant, logger } from '@constants'
-import { initModels, userAttributes, tokenAttributes } from './init-models'
+import {
+  initModels,
+  userAttributes,
+  synchronizeAttributes,
+  transactionAttributes,
+  nftAttributes,
+  nft_transactionAttributes,
+  imageAttributes,
+  tokenAttributes
+} from './init-models'
 import { Sequelize } from 'sequelize'
 
 /**
@@ -46,12 +55,40 @@ const sequelize = new Sequelize({
 /**
  * Initializes and returns the models for the given Sequelize instance.
  */
-const { user, token } = initModels(sequelize)
+const { image, synchronize, transaction, user, nft, nft_transaction, token } =
+  initModels(sequelize)
 
 /**
  * These type aliases are used to simplify the usage of the corresponding attribute interfaces.
  * IUser represents the userAttributes interface.
+ * ISynchronize represents the synchronizeAttributes interface.
+ * ITransaction represents the transactionAttributes interface.
+ * INft represents the nftAttributes interface.
+ * INftChild represents the nft_childAttributes interface.
+ * INftTransaction represents the nft_transactionAttributes interface.
  */
 type IUser = userAttributes
+type ISynchronize = synchronizeAttributes
+type ITransaction = transactionAttributes
+type INft = nftAttributes
+type INftTransaction = nft_transactionAttributes
+type IImage = imageAttributes
 type IToken = tokenAttributes
-export { user, type IUser, token, type IToken, sequelize }
+
+export {
+  synchronize,
+  transaction,
+  user,
+  nft,
+  nft_transaction,
+  type IUser,
+  type ISynchronize,
+  type ITransaction,
+  type INft,
+  type INftTransaction,
+  image,
+  type IImage,
+  token,
+  type IToken,
+  sequelize
+}
