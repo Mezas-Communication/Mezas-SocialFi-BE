@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: mezas_postgres
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /data/postgres
+      TZ: 'Etc/UTC'
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - ${NETWORK}
+
+networks:
+  mezas-network:
+    driver: bridge
+    name: ${NETWORK}
+
+volumes:
+  postgres:
