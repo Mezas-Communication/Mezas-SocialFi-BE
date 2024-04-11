@@ -8,7 +8,6 @@ const logger = winston.createLogger({
   /**
    * An array of Winston transports that specify where logs should be sent.
    * @param {Console} new winston.transports.Console() - Sends logs to the console.
-   * @param {LokiTransport} new LokiTransport() - Sends logs to Grafana Loki.
    */
   transports: [
     new winston.transports.Console({

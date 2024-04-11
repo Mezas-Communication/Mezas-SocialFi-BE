@@ -1,5 +1,4 @@
 import { Constant, NFT_ABI } from '@constants'
-import { ethers } from 'ethers'
 import Web3 from 'web3'
 
 /**
@@ -8,9 +7,6 @@ import Web3 from 'web3'
  * @returns A new instance of the Web3 class.
  */
 const web3 = new Web3(Constant.BLOCKCHAIN_URL)
-const etherProvider = new ethers.providers.JsonRpcProvider(
-  Constant.BLOCKCHAIN_URL
-)
 
 /**
  * Creates a new contract instance using the provided ABI and address.
@@ -34,16 +30,4 @@ const hashText = (text: string) => web3.utils.sha3(text) as string
  */
 const nftContract = newContract(NFT_ABI.abi, NFT_ABI.address)
 
-const isTransactionSuccess = async (payload: {
-  from: string
-  to: string
-  data: string
-}): Promise<boolean> => {
-  try {
-    return !!(await etherProvider.estimateGas(payload))
-  } catch (error) {
-    return false
-  }
-}
-
-export { web3, newContract, hashText, nftContract, isTransactionSuccess }
+export { web3, newContract, hashText, nftContract }

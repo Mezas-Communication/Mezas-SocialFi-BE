@@ -18,7 +18,6 @@ global.beforeAll(async () => {
    * @param {string} options.database - The name of the database to connect to.
    * @param {string} options.username - The username to use when connecting to the database.
    * @param {string} options.password - The password to use when connecting to the database.
-   * @param {boolean} [options.logging=false
    */
   const sequelize = new Sequelize({
     dialect: 'postgres',
@@ -27,7 +26,6 @@ global.beforeAll(async () => {
     database: DB_NAME,
     username: DB_USER,
     password: DB_PASSWORD,
-    logging: false,
     timezone: '+07:00',
     schema: DB_SCHEMA
   })
