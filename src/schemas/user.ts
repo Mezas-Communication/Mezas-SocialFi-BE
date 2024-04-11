@@ -18,7 +18,6 @@ export interface userAttributes {
   username?: string
   address?: string
   last_login_at?: Date
-  view?: number
   avatar?: string
 }
 
@@ -36,7 +35,6 @@ export type userOptionalAttributes =
   | 'username'
   | 'address'
   | 'last_login_at'
-  | 'view'
   | 'avatar'
 export type userCreationAttributes = Optional<
   userAttributes,
@@ -58,7 +56,6 @@ export class user
   username?: string
   address?: string
   last_login_at?: Date
-  view?: number
   avatar?: string
 
   // user hasMany nft via user_id
@@ -235,11 +232,6 @@ export class user
         last_login_at: {
           type: DataTypes.DATE,
           allowNull: true
-        },
-        view: {
-          type: DataTypes.BIGINT,
-          allowNull: true,
-          defaultValue: 0
         },
         avatar: {
           type: DataTypes.STRING,

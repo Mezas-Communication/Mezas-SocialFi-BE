@@ -1,4 +1,4 @@
-import { Constant, logger } from '@constants'
+import { Constant } from '@constants'
 import {
   initModels,
   userAttributes,
@@ -35,7 +35,6 @@ if (listMatch && listMatch.length > 1) {
  * @param {string} options.username - The username to use when connecting to the database.
  * @param {string} options.password - The password to use when connecting to the database.
  * @param {string} options.schema - The schema to use when connecting to the database.
- * @param {boolean} [options.logging=false
  */
 const sequelize = new Sequelize({
   dialect: 'postgres',
@@ -44,10 +43,6 @@ const sequelize = new Sequelize({
   database: DB_NAME,
   username: DB_USER,
   password: DB_PASSWORD,
-  logging: sql =>
-    logger.info({
-      message: sql
-    }),
   timezone,
   schema: DB_SCHEMA
 })

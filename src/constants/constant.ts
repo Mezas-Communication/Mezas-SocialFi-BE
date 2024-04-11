@@ -130,6 +130,7 @@ const Constant = {
   DB_HOST: `${process.env.DB_HOST}`,
   DB_PORT: `${process.env.DB_PORT}`,
   DB_SCHEMA: `${process.env.DB_SCHEMA}`,
+  OWNER_ADDRESS: `${process.env.OWNER_ADDRESS}`,
   NFT_CONTRACT_ADDRESS: `${process.env.NFT_CONTRACT_ADDRESS}`,
   ZERO_ADDRESS,
   ZERO_BYTES32,
@@ -173,8 +174,7 @@ const Constant = {
     ADMIN_NOT_FOUND: 'Admin not found'
   },
   CONTRACT_EVENT: {
-    TRANSFER: 'Transfer',
-    UPDATE: 'URIUpdated',
+    UPDATE: 'URI',
     MINT: 'Mint'
   },
   RANDOM_COMPLEXITY: 10000000,
