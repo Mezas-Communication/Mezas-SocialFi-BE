@@ -81,8 +81,7 @@ export class AuthController extends Controller {
           role: 1,
           username: 'administrator',
           address: '0x3c90d8be4573f0582a2613e5cefe8727431db2f2',
-          last_login_at: new Date(),
-          view: '0'
+          last_login_at: new Date()
         },
         otp_code: null,
         access_token:
@@ -179,8 +178,7 @@ export class AuthController extends Controller {
           role: 1,
           username: 'administrator',
           address: '0x3c90d8be4573f0582a2613e5cefe8727431db2f2',
-          last_login_at: new Date(),
-          view: '0'
+          last_login_at: new Date()
         },
         otp_code: null,
         access_token:
@@ -420,8 +418,7 @@ export class AuthController extends Controller {
           role: 0,
           username: 'administrator',
           address: '0x3c90d8be4573f0582a2613e5cefe8727431db2f2',
-          last_login_at: new Date(),
-          view: '0'
+          last_login_at: new Date()
         },
         otp_code: null,
         access_token:
@@ -517,8 +514,7 @@ export class AuthController extends Controller {
           role: 1,
           username: 'administrator',
           address: '0x3c90d8be4573f0582a2613e5cefe8727431db2f2',
-          last_login_at: new Date(),
-          view: '0'
+          last_login_at: new Date()
         },
         otp_code: null,
         access_token:
