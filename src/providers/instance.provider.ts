@@ -1,4 +1,9 @@
-import { UserService, AdminService, AuthService } from '@app'
+import {
+  UserService,
+  AdminService,
+  AuthService,
+  TransactionService
+} from '@app'
 
 /**
  * A Singleton class that provides access to various services.
@@ -9,6 +14,7 @@ class Singleton {
   private static userInstance: UserService
   private static adminInstance: AdminService
   private static authInstance: AuthService
+  private static transactionInstance: TransactionService
 
   /**
    * Returns the singleton instance of the UserService class. If the instance does not exist,
@@ -44,6 +50,18 @@ class Singleton {
       Singleton.authInstance = new AuthService()
     }
     return Singleton.authInstance
+  }
+
+  /**
+   * Returns the singleton instance of the TransactionService class. If the instance does not exist,
+   * it creates a new one.
+   * @returns {TransactionService} - The singleton instance of the TransactionService class.
+   */
+  public static getTransactionInstance(): TransactionService {
+    if (!Singleton.transactionInstance) {
+      Singleton.transactionInstance = new TransactionService()
+    }
+    return Singleton.transactionInstance
   }
 }
 
