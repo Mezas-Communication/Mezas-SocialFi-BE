@@ -2,7 +2,8 @@ import {
   UserService,
   AdminService,
   AuthService,
-  TransactionService
+  TransactionService,
+  NftService
 } from '@app'
 
 /**
@@ -15,6 +16,7 @@ class Singleton {
   private static adminInstance: AdminService
   private static authInstance: AuthService
   private static transactionInstance: TransactionService
+  private static nftInstance: NftService
 
   /**
    * Returns the singleton instance of the UserService class. If the instance does not exist,
@@ -62,6 +64,18 @@ class Singleton {
       Singleton.transactionInstance = new TransactionService()
     }
     return Singleton.transactionInstance
+  }
+
+  /**
+   * Returns the singleton instance of the NftService class. If the instance does not exist,
+   * it creates a new one.
+   * @returns {NftService} - The singleton instance of the NftService class.
+   */
+  public static getNftInstance(): NftService {
+    if (!Singleton.nftInstance) {
+      Singleton.nftInstance = new NftService()
+    }
+    return Singleton.nftInstance
   }
 }
 
