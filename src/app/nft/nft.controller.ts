@@ -1,17 +1,17 @@
 import { OutputDetailNFT } from '@app'
-// import { AuthMiddleware } from '@middlewares'
+import { AuthMiddleware } from '@middlewares'
 import { Constant, type Option, logError, onError, onSuccess } from '@constants'
 import { Request as ExpressRequest } from 'express'
 import {
   Controller,
   Example,
   Get,
-  // Middlewares,
+  Middlewares,
   Path,
   Request,
   Response,
   Route,
-  // Security,
+  Security,
   Tags
 } from 'tsoa'
 import { Singleton } from '@providers'
@@ -20,10 +20,10 @@ const { NETWORK_STATUS_MESSAGE } = Constant
 
 @Tags('NFT')
 @Route('nft')
-// @Middlewares([AuthMiddleware])
-// @Security({
-//   authorization: []
-// })
+@Middlewares([AuthMiddleware])
+@Security({
+  authorization: []
+})
 export class NftController extends Controller {
   /**
    * Retrieves the details of a specific NFT with the given slug.
