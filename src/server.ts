@@ -13,7 +13,8 @@ import { Constant, logRequest, logger, onError } from '@constants'
 import {
   startSynchronizeDataFromSmartContract,
   initialAdmin,
-  initialDatabase
+  initialDatabase,
+  RedisUtils
 } from '@providers'
 import { type FieldErrors, ValidateError } from 'tsoa'
 import JSONBigint from 'json-bigint'
@@ -21,8 +22,14 @@ import JSONBigint from 'json-bigint'
 /**
  * Starts the process of synchronizing data from a smart contract.
  */
-startSynchronizeDataFromSmartContract()
-
+async function initialRedis() {
+  const redisUtils = new RedisUtils()
+  await redisUtils.connect()
+  startSynchronizeDataFromSmartContract()
+}
+initialRedis().catch((error: any) => {
+  console.error(`[InitialRedis] ${error.message}`)
+})
 /**
  * Initializes the database and creates an admin user with the default username.
  */

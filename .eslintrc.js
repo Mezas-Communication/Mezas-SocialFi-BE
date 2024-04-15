@@ -19,6 +19,7 @@ module.exports = {
     '@typescript-eslint/no-extraneous-class': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/brace-style': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off'
+    '@typescript-eslint/consistent-type-imports': 'off',
+    '@typescript-eslint/prefer-readonly': 'off'
   }
 }
