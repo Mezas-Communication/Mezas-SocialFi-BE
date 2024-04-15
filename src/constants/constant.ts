@@ -123,6 +123,7 @@ const Constant = {
   ADMIN_INITIAL_USERNAME: `${process.env.ADMIN_INITIAL_USERNAME}`,
   ADMIN_INITIAL_PASSWORD: `${process.env.ADMIN_INITIAL_PASSWORD}`,
   PORT: `${process.env.PORT}`,
+  REDIS_HOST: `${process.env.REDIS_HOST}`,
   BLOCKCHAIN_URL: `${process.env.BLOCKCHAIN_URL}`,
   DB_NAME: `${process.env.DB_NAME}`,
   DB_USER: `${process.env.DB_USER}`,
