@@ -1,4 +1,5 @@
 import type { RangeFields, SortFields, SortTypes } from '@app'
+import { ethers } from 'ethers'
 import { type FieldErrors } from 'tsoa'
 
 /**
@@ -22,7 +23,8 @@ export const inputOwnNftValidate = (
   sortType: SortTypes = [],
   rangeFields: RangeFields = [],
   fromValues: string[] = [],
-  toValues: string[] = []
+  toValues: string[] = [],
+  address: string = ''
 ): FieldErrors | null => {
   if (page < 1) {
     return {
@@ -130,6 +132,15 @@ export const inputOwnNftValidate = (
       toValues: {
         message: 'Range fields and to values must be equal',
         value: toValues
+      }
+    }
+  }
+
+  if (address.length > 0 && !ethers.utils.isAddress(address)) {
+    return {
+      address: {
+        message: 'Address is not a valid address',
+        value: address
       }
     }
   }
