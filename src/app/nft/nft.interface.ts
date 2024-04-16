@@ -1,4 +1,4 @@
-import { INft } from '@schemas'
+import { INft, INftTransaction } from '@schemas'
 
 export type OutputDetailNFT = INft
 
@@ -79,3 +79,9 @@ export type SortTypes = SortType[]
  * @typedef {RangeField[]} RangeFields
  */
 export type RangeFields = RangeField[]
+
+export type OutputHistoryDetailNFT = INftTransaction
+export interface OutputHistoryNFT {
+  data: INftTransaction[]
+  total: number
+}

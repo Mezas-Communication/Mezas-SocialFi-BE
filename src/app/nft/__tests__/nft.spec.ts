@@ -97,4 +97,21 @@ describe('nft', () => {
     const data = await nftService.detailNFT('4fe61e1a9fb1d1')
     expect(data).toBeDefined()
   })
+
+  it('NFT history detail', async () => {
+    /**
+     * Retrieves the details of an NFT with the given ID from the NFT service.
+     */
+    const { data, total } = await nftService.historyNFT('4fe61e1a9fb1d1', 10, 1)
+    expect(total).toBeDefined()
+    expect(data).toBeDefined()
+  })
+
+  it('NFT history detail version', async () => {
+    /**
+     * Retrieves the details of an NFT with the given ID from the NFT service.
+     */
+    const data = await nftService.historyNFTDetail('4fe61e1a9fb1d1', '1')
+    expect(data).toBeDefined()
+  })
 })
