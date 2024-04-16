@@ -62,11 +62,6 @@ export class NftController extends Controller {
           title: 'NFT name',
           is_active_owner: true,
           properties: {
-            rarity: {
-              type: 'number',
-              value: 3,
-              is_active: true
-            },
             class: {
               type: 'number',
               value: 2,
@@ -181,11 +176,6 @@ export class NftController extends Controller {
             title: 'NFT name',
             is_active_owner: true,
             properties: {
-              rarity: {
-                type: 'number',
-                value: 3,
-                is_active: true
-              },
               class: {
                 type: 'number',
                 value: 2,
@@ -331,11 +321,6 @@ export class NftController extends Controller {
             title: 'NFT name',
             is_active_owner: true,
             properties: {
-              rarity: {
-                type: 'number',
-                value: 3,
-                is_active: true
-              },
               class: {
                 type: 'number',
                 value: 2,
@@ -465,14 +450,9 @@ export class NftController extends Controller {
           title: 'NFT name',
           is_active_owner: true,
           properties: {
-            rarity: {
-              type: 'number',
-              value: 3,
-              is_active: true
-            },
             class: {
-              type: 'number',
-              value: 2,
+              type: 'string',
+              value: 'tanker',
               is_active: true
             },
             level: {
