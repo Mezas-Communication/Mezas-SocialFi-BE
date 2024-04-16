@@ -176,7 +176,8 @@ const Constant = {
   },
   CONTRACT_EVENT: {
     UPDATE: 'URI',
-    MINT: 'Mint'
+    MINT: 'Mint',
+    TRANSFER: 'Transfer'
   },
   RANDOM_COMPLEXITY: 10000000,
   USER_ROLE
