@@ -45,5 +45,5 @@ global.beforeAll(async () => {
   /**
    * Initializes the synconize table.
    */
-  await onJobGetDataFromSmartContract()
+  await onJobGetDataFromSmartContract(true)
 })
