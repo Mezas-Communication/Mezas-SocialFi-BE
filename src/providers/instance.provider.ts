@@ -3,7 +3,8 @@ import {
   AdminService,
   AuthService,
   TransactionService,
-  NftService
+  NftService,
+  MetadataService
 } from '@app'
 
 /**
@@ -17,6 +18,7 @@ class Singleton {
   private static authInstance: AuthService
   private static transactionInstance: TransactionService
   private static nftInstance: NftService
+  private static metadataService: MetadataService
 
   /**
    * Returns the singleton instance of the UserService class. If the instance does not exist,
@@ -76,6 +78,18 @@ class Singleton {
       Singleton.nftInstance = new NftService()
     }
     return Singleton.nftInstance
+  }
+
+  /**
+   * Returns the singleton instance of the MetadataService class. If the instance does not exist,
+   * it creates a new one.
+   * @returns {MetadataService} - The singleton instance of the MetadataService class.
+   */
+  public static getMetadataInstance(): MetadataService {
+    if (!Singleton.metadataService) {
+      Singleton.metadataService = new MetadataService()
+    }
+    return Singleton.metadataService
   }
 }
 
