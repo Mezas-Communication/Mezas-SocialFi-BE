@@ -12,7 +12,7 @@ import { type FieldErrors } from 'tsoa'
  * @param {RangeFields} [rangeFields=[]] - The fields to apply range filters to.
  * @param {string[]} [fromValues=[]] - The values to filter the range fields from.
  * @param {string[]} [toValues=[]] - The values to filter the range fields to.
- * @param {string} [coordinate=''] - The coordinate to filter the results by.
+ * @param {string} [address=''] - The address to filter the results by.
  * @returns {boolean} - Returns true if the input parameters are valid, false otherwise.
  */
 export const inputOwnNftValidate = (

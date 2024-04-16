@@ -187,8 +187,8 @@ export class NftController extends Controller {
                 is_active: true
               },
               class: {
-                type: 'number',
-                value: 2,
+                type: 'string',
+                value: 'tanker',
                 is_active: true
               },
               level: {
@@ -337,8 +337,8 @@ export class NftController extends Controller {
                 is_active: true
               },
               class: {
-                type: 'number',
-                value: 2,
+                type: 'string',
+                value: 'tanker',
                 is_active: true
               },
               level: {
@@ -471,8 +471,8 @@ export class NftController extends Controller {
               is_active: true
             },
             class: {
-              type: 'number',
-              value: 2,
+              type: 'string',
+              value: 'tanker',
               is_active: true
             },
             level: {
