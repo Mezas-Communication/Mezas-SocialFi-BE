@@ -118,14 +118,9 @@ export class MetadataController extends Controller {
         title: 'NFT name',
         is_active_owner: true,
         properties: {
-          rarity: {
-            type: 'number',
-            value: 3,
-            is_active: true
-          },
           class: {
-            type: 'number',
-            value: 2,
+            type: 'string',
+            value: 'tanker',
             is_active: true
           },
           level: {
@@ -170,36 +165,6 @@ export class MetadataController extends Controller {
     authorization: []
   })
   @Middlewares([AuthMiddleware, AdminMiddleware])
-  @Example<Option<OutputUpload>>(
-    {
-      data: '0xad6c1b10d79a8fd21b547cb74e4239d2f5e79105f2f1d6289306e988e5bf2c6a',
-      success: true,
-      message: 'Success',
-      count: 1,
-      total: 1
-    },
-    'Success'
-  )
-  @Response<Option<OutputUpload>>(
-    '422',
-    NETWORK_STATUS_MESSAGE.VALIDATE_ERROR,
-    {
-      success: false,
-      message: NETWORK_STATUS_MESSAGE.VALIDATE_ERROR
-    }
-  )
-  @Response<Option<OutputUpload>>('401', NETWORK_STATUS_MESSAGE.UNAUTHORIZED, {
-    success: false,
-    message: NETWORK_STATUS_MESSAGE.UNAUTHORIZED
-  })
-  @Response<Option<OutputUpload>>(
-    '500',
-    NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR,
-    {
-      success: false,
-      message: NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR
-    }
-  )
   public async uploadJson(
     @Request() req: ExpressRequest,
     @Body()
