@@ -61,15 +61,12 @@ const getSlug = (token_id: string) => {
 
 const DEFAULT_JSON_NFT = {
   type: 'hero',
+  image: 'https://nft.xyz.com',
+  title: 'NFT hero',
   is_active_owner: true,
   properties: {
-    rarity: {
-      type: 'number',
-      value: null,
-      is_active: true
-    },
     class: {
-      type: 'number',
+      type: 'string',
       value: null,
       is_active: true
     },
