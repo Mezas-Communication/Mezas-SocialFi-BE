@@ -2,6 +2,7 @@ import 'dotenv/config'
 import { Sequelize } from 'sequelize'
 import { readFileSync } from 'fs'
 import { Constant } from '@constants'
+import { onJobGetDataFromSmartContract } from '@providers'
 global.beforeAll(async () => {
   /**
    * Destructures the environment variables for the database name, user, password, host, and port.
@@ -40,4 +41,9 @@ global.beforeAll(async () => {
   await sequelize.query(
     readFileSync('./src/db/create.db.sql').toString('utf-8')
   )
+
+  /**
+   * Initializes the synconize table.
+   */
+  await onJobGetDataFromSmartContract()
 })
