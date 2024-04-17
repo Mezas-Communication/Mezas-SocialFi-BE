@@ -11,7 +11,7 @@ const s3 = new AWS.S3({
   }
 })
 
-const uploadFile = async (imageBuffer: Buffer): Promise<string> => {
+const uploadFileS3 = async (imageBuffer: Buffer): Promise<string> => {
   const fileName = keccak256(imageBuffer)
 
   const uploadParams = {
@@ -41,4 +41,4 @@ const readFileS3 = async (key: string) => {
   }
 }
 
-export { uploadFile, readFileS3 }
+export { uploadFileS3, readFileS3 }

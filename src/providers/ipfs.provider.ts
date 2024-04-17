@@ -13,7 +13,7 @@ const uploadJson = async (json: any): Promise<any> => {
   return jsonIPFS
 }
 
-const uploadFile = async (content: Buffer): Promise<any> => {
+const uploadFileIPFS = async (content: Buffer): Promise<any> => {
   const client = getClient()
 
   const file = await client.add({
@@ -22,7 +22,7 @@ const uploadFile = async (content: Buffer): Promise<any> => {
   return file
 }
 
-const getFile = async (cid: string): Promise<any> => {
+const getFileIPFS = async (cid: string): Promise<any> => {
   const client = getClient()
   let result: any = []
   for await (const chunk of client.cat(cid)) {
@@ -63,4 +63,4 @@ const readFileIPFS = async (cid: string) => {
   return data.data
 }
 
-export { uploadJson, uploadFile, readFileIPFS, uploadFolder, getFile }
+export { uploadJson, uploadFileIPFS, readFileIPFS, uploadFolder, getFileIPFS }
