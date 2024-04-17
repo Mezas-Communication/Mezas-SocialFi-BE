@@ -6,6 +6,7 @@ import {
 } from '@providers'
 import type { OutputGetImages, OutputUpload } from '@app'
 import { image } from '@schemas'
+import { Constant } from '@constants'
 class MetadataService {
   /**
    * Uploads an image to a remote server.
@@ -31,7 +32,8 @@ class MetadataService {
    * @returns {Promise<OutputUpload>} A promise that resolves to an object containing information about the uploaded image.
    */
   public async userUploadImage(imageBuffer: Buffer): Promise<OutputUpload> {
-    const url = await uploadFileIPFS(imageBuffer)
+    const imageIPFS = await uploadFileIPFS(imageBuffer)
+    const url = `${Constant.IPFS_GATEWAY_URI}${imageIPFS.path}`
     await image.findOrCreate({
       where: {
         url
