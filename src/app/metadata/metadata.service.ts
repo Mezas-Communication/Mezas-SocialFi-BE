@@ -1,4 +1,9 @@
-import { readFile, uploadFile } from '@providers'
+import {
+  readFileS3,
+  readFileIPFS,
+  uploadFileIPFS,
+  uploadFileS3
+} from '@providers'
 import type { OutputGetImages, OutputUpload } from '@app'
 import { image } from '@schemas'
 class MetadataService {
@@ -7,8 +12,26 @@ class MetadataService {
    * @param {Buffer} imageBuffer - The image buffer to upload.
    * @returns {Promise<OutputUpload>} A promise that resolves to an object containing information about the uploaded image.
    */
-  public async uploadImage(imageBuffer: Buffer): Promise<OutputUpload> {
-    const url = await uploadFile(imageBuffer)
+  public async adminUploadImage(imageBuffer: Buffer): Promise<OutputUpload> {
+    const url = await uploadFileS3(imageBuffer)
+    await image.findOrCreate({
+      where: {
+        url
+      },
+      defaults: {
+        url
+      }
+    })
+    return url
+  }
+
+  /**
+   * Uploads an image to a remote server.
+   * @param {Buffer} imageBuffer - The image buffer to upload.
+   * @returns {Promise<OutputUpload>} A promise that resolves to an object containing information about the uploaded image.
+   */
+  public async userUploadImage(imageBuffer: Buffer): Promise<OutputUpload> {
+    const url = await uploadFileIPFS(imageBuffer)
     await image.findOrCreate({
       where: {
         url
@@ -24,8 +47,16 @@ class MetadataService {
    * Reads a file from the given CID and returns a Promise that resolves to a Buffer.
    * @param {string} cid - The CID of the file to read.
    */
-  public async readFile(cid: string): Promise<any> {
-    return readFile(cid)
+  public async readFileS3(cid: string): Promise<any> {
+    return await readFileS3(cid)
+  }
+
+  /**
+   * Reads a file from the given CID and returns a Promise that resolves to a Buffer.
+   * @param {string} cid - The CID of the file to read.
+   */
+  public async readFileIPFS(cid: string): Promise<any> {
+    return await readFileIPFS(cid)
   }
 
   /**
