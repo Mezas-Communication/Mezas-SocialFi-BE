@@ -27,7 +27,7 @@ const uploadFile = async (imageBuffer: Buffer): Promise<string> => {
   return fileName
 }
 
-const readFile = async (key: string) => {
+const readFileS3 = async (key: string) => {
   const params = {
     Bucket: Constant.S3_BUCKET_NAME,
     Key: key
@@ -41,4 +41,4 @@ const readFile = async (key: string) => {
   }
 }
 
-export { uploadFile, readFile }
+export { uploadFile, readFileS3 }
