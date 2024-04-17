@@ -18,7 +18,7 @@ describe('auth', () => {
    * Test function to get metadata from a file using the metadataService.
    */
   it('Get metadata', async () => {
-    const data = await metadataService.readFile(
+    const data = await metadataService.readFileS3(
       '0x37c18fc02ebf2283a014035f84aadf82fc3e827acd6d21bc9a653433eb927089'
     )
     expect(data).toBeDefined()

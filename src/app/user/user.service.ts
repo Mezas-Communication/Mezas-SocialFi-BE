@@ -1,5 +1,5 @@
 import { Constant } from '@constants'
-import { uploadFile } from '@providers'
+import { uploadFileS3 } from '@providers'
 import { type OutputUpload } from '@app'
 import { type IUser, user } from '@schemas'
 class UserService {
@@ -80,7 +80,7 @@ class UserService {
    * @returns {Promise<OutputUpload>} A promise that resolves to an object containing information about the uploaded image.
    */
   public async uploadAvatar(imageBuffer: Buffer): Promise<OutputUpload> {
-    const cid = await uploadFile(imageBuffer)
+    const cid = await uploadFileS3(imageBuffer)
     return cid
   }
 }
