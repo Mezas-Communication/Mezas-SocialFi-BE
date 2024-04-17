@@ -25,7 +25,7 @@ class MetadataService {
    * @param {string} cid - The CID of the file to read.
    */
   public async readFile(cid: string): Promise<any> {
-    return await readFile(cid)
+    return readFile(cid)
   }
 
   /**
