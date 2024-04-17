@@ -1,9 +1,7 @@
 import {
-  InputUploadJson,
   type OutputRead,
   type OutputUpload,
   uploadImageValidate,
-  inputUploadJsonValidate,
   type OutputGetImages
 } from '@app'
 import {
@@ -18,7 +16,6 @@ import { AdminMiddleware, AuthMiddleware } from '@middlewares'
 import { Singleton } from '@providers'
 import { Request as ExpressRequest } from 'express'
 import {
-  Body,
   Controller,
   Example,
   Get,
@@ -101,114 +98,6 @@ export class MetadataController extends Controller {
       const res = await Singleton.getMetadataInstance().uploadImage(
         image.buffer
       )
-      return onSuccess(res)
-    } catch (error: any) {
-      logError(error, req)
-      return onError(error, this)
-    }
-  }
-
-  /**
-   * Uploads a JSON file to the server and returns a response object.
-   * @param {ExpressRequest} req - The Express request object.
-   * @param {InputUploadJson} body - The body containing the JSON file to upload. Example body:
-   * @example body {
-        type: 'hero',
-        image: 'https://image.nft.xyz',
-        title: 'NFT name',
-        is_active_owner: true,
-        properties: {
-          class: {
-            type: 'string',
-            value: 'tanker',
-            is_active: true
-          },
-          level: {
-            type: 'number',
-            value: 50,
-            is_active: true
-          },
-          move_speed: {
-            type: 'number',
-            value: 80,
-            is_active: true
-          },
-          attack_points: {
-            type: 'number',
-            value: 45,
-            is_active: true
-          },
-          health_points: {
-            type: 'number',
-            value: 300,
-            is_active: true
-          },
-          defender_points: {
-            type: 'number',
-            value: 25,
-            is_active: true
-          },
-          win_count: {
-            type: 'number',
-            value: 72,
-            is_active: true
-          }
-        }
-      }
-   * @returns {Promise<Option<OutputUpload>>} - A Promise that resolves to an object containing the uploaded data, success status, message, count, and total.
-   * @throws {UnauthorizedError} - If the user is not authorized to upload images.
-   * @throws {ValidateError} - If there is an error validating the image.
-   * @throws {InternalServerError} - If there is an internal server error.
-   */
-  @Post('admin/upload/json')
-  @Security({
-    authorization: []
-  })
-  @Middlewares([AuthMiddleware, AdminMiddleware])
-  @Example<Option<OutputUpload>>(
-    {
-      data: '0xad6c1b10d79a8fd21b547cb74e4239d2f5e79105f2f1d6289306e988e5bf2c6a',
-      success: true,
-      message: 'Success',
-      count: 1,
-      total: 1
-    },
-    'Success'
-  )
-  @Response<Option<OutputUpload>>(
-    '422',
-    NETWORK_STATUS_MESSAGE.VALIDATE_ERROR,
-    {
-      success: false,
-      message: NETWORK_STATUS_MESSAGE.VALIDATE_ERROR
-    }
-  )
-  @Response<Option<OutputUpload>>('401', NETWORK_STATUS_MESSAGE.UNAUTHORIZED, {
-    success: false,
-    message: NETWORK_STATUS_MESSAGE.UNAUTHORIZED
-  })
-  @Response<Option<OutputUpload>>(
-    '500',
-    NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR,
-    {
-      success: false,
-      message: NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR
-    }
-  )
-  public async uploadJson(
-    @Request() req: ExpressRequest,
-    @Body()
-    body: InputUploadJson
-  ): Promise<Option<OutputUpload>> {
-    try {
-      /**
-       * Validates the JSON payload.
-       */
-      const validate = inputUploadJsonValidate(body)
-      if (validate) {
-        throw new ErrorHandler(validate, NETWORK_STATUS_MESSAGE.VALIDATE_ERROR)
-      }
-      const res = await Singleton.getMetadataInstance().uploadJson(body)
       return onSuccess(res)
     } catch (error: any) {
       logError(error, req)

@@ -59,50 +59,6 @@ const getSlug = (token_id: string) => {
   return `${ethers.utils.hashMessage(token_id).slice(2, 16)}`.toLowerCase()
 }
 
-const DEFAULT_JSON_NFT = {
-  type: 'hero',
-  image: 'https://nft.xyz.com',
-  title: 'NFT hero',
-  is_active_owner: true,
-  properties: {
-    class: {
-      type: 'string',
-      value: null,
-      is_active: true
-    },
-    level: {
-      type: 'number',
-      value: null,
-      is_active: true
-    },
-    move_speed: {
-      type: 'number',
-      value: null,
-      is_active: true
-    },
-    attack_points: {
-      type: 'number',
-      value: null,
-      is_active: true
-    },
-    health_points: {
-      type: 'number',
-      value: null,
-      is_active: true
-    },
-    defender_points: {
-      type: 'number',
-      value: null,
-      is_active: true
-    },
-    win_count: {
-      type: 'number',
-      value: null,
-      is_active: true
-    }
-  }
-}
-
 /**
  * An object containing various constants used throughout the application.
  */
@@ -180,4 +136,4 @@ const Constant = {
   USER_ROLE
 }
 
-export { Constant, getVerifyCode, OTP_TIMEOUT, DEFAULT_JSON_NFT, getSlug }
+export { Constant, getVerifyCode, OTP_TIMEOUT, getSlug }

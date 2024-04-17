@@ -1,6 +1,5 @@
 import { readFile, uploadFile } from '@providers'
-import type { InputUploadJson, OutputGetImages, OutputUpload } from '@app'
-import { DEFAULT_JSON_NFT } from '@constants'
+import type { OutputGetImages, OutputUpload } from '@app'
 import { image } from '@schemas'
 class MetadataService {
   /**
@@ -19,18 +18,6 @@ class MetadataService {
       }
     })
     return url
-  }
-
-  /**
-   * Uploads a JSON payload to a server by converting it to a buffer and calling the uploadFile function.
-   * @param {InputUploadJson} payload - The JSON payload to upload.
-   * @returns {Promise<OutputUpload>} - A promise that resolves to an object containing information about the uploaded file.
-   */
-  public async uploadJson(payload: InputUploadJson): Promise<OutputUpload> {
-    // Set default value for optional properties of payload
-    if (!payload.type) payload.type = DEFAULT_JSON_NFT.type
-
-    return await uploadFile(Buffer.from(JSON.stringify(payload)))
   }
 
   /**
