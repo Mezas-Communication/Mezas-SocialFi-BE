@@ -27,6 +27,7 @@
     "file-type": "16.5.4",
     "google-auth-library": "^8.9.0",
     "http": "^0.0.1-security",
+    "ipfs-http-client": "56.0.3",
     "is-svg": "4.4.0",
     "json-bigint": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
