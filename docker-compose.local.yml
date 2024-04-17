@@ -15,12 +15,11 @@ services:
     volumes:
       - postgres:/data/postgres
     networks:
-      - ${NETWORK}
+      - mezas-network
 
 networks:
   mezas-network:
     driver: bridge
-    name: ${NETWORK}
 
 volumes:
   postgres:

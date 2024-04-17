@@ -18,7 +18,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - ${NETWORK}
+      - mezas-network
 
   postgres:
     container_name: mezas_postgres
@@ -34,12 +34,11 @@ services:
     volumes:
       - postgres:/data/postgres
     networks:
-      - ${NETWORK}
+      - mezas-network
 
 networks:
   mezas-network:
     driver: bridge
-    name: ${NETWORK}
 
 volumes:
   postgres:
