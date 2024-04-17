@@ -1,8 +1,9 @@
+import { Constant } from '@constants'
 import axios from 'axios'
 import { create } from 'ipfs-http-client'
 
 const getClient = () => {
-  const ipfsUrl: any = new URL(process.env.IPFS_PROVIDER_URI as string)
+  const ipfsUrl: any = new URL(`${Constant.IPFS_PROVIDER_URI}`)
   const client = create(ipfsUrl)
   return client
 }
