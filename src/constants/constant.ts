@@ -73,6 +73,8 @@ const Constant = {
   S3_SECRET_ACCESS_KEY: `${process.env.S3_SECRET_ACCESS_KEY}`,
   S3_ACCESS_KEY: `${process.env.S3_ACCESS_KEY}`,
   S3_BUCKET_NAME: `${process.env.S3_BUCKET_NAME}`,
+  IPFS_GATEWAY_URI: `${process.env.IPFS_GATEWAY_URI}`,
+  IPFS_PROVIDER_URI: `${process.env.IPFS_PROVIDER_URI}`,
   ADMIN_INITIAL_USERNAME: `${process.env.ADMIN_INITIAL_USERNAME}`,
   ADMIN_INITIAL_PASSWORD: `${process.env.ADMIN_INITIAL_PASSWORD}`,
   PORT: `${process.env.PORT}`,
