@@ -7,7 +7,8 @@ import {
   nftAttributes,
   nft_transactionAttributes,
   imageAttributes,
-  tokenAttributes
+  tokenAttributes,
+  postsAttributes
 } from './init-models'
 import { Sequelize } from 'sequelize'
 
@@ -50,8 +51,16 @@ const sequelize = new Sequelize({
 /**
  * Initializes and returns the models for the given Sequelize instance.
  */
-const { image, synchronize, transaction, user, nft, nft_transaction, token } =
-  initModels(sequelize)
+const {
+  image,
+  synchronize,
+  transaction,
+  user,
+  nft,
+  nft_transaction,
+  token,
+  posts
+} = initModels(sequelize)
 
 /**
  * These type aliases are used to simplify the usage of the corresponding attribute interfaces.
@@ -69,6 +78,7 @@ type INft = nftAttributes
 type INftTransaction = nft_transactionAttributes
 type IImage = imageAttributes
 type IToken = tokenAttributes
+type IPosts = postsAttributes
 
 export {
   synchronize,
@@ -76,14 +86,16 @@ export {
   user,
   nft,
   nft_transaction,
+  image,
+  token,
+  sequelize,
+  posts,
   type IUser,
   type ISynchronize,
   type ITransaction,
   type INft,
   type INftTransaction,
-  image,
   type IImage,
-  token,
   type IToken,
-  sequelize
+  type IPosts
 }

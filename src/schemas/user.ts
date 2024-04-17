@@ -5,6 +5,7 @@ import type { nft, nftId } from './nft'
 import type { nft_transaction, nft_transactionId } from './nft_transaction'
 import type { token, tokenId } from './token'
 import type { transaction, transactionId } from './transaction'
+import { posts, postsId } from './posts'
 
 export interface userAttributes {
   id: number
@@ -181,7 +182,18 @@ export class user
     transactionId
   >
   countUser_id_to_transactions!: Sequelize.HasManyCountAssociationsMixin
-
+  // user hasMany posts via user_id
+  posts!: posts[]
+  getPosts!: Sequelize.HasManyGetAssociationsMixin<posts>
+  setPosts!: Sequelize.HasManySetAssociationsMixin<posts, postsId>
+  addPost!: Sequelize.HasManyAddAssociationMixin<posts, postsId>
+  addPosts!: Sequelize.HasManyAddAssociationsMixin<posts, postsId>
+  createPost!: Sequelize.HasManyCreateAssociationMixin<posts>
+  removePost!: Sequelize.HasManyRemoveAssociationMixin<posts, postsId>
+  removePosts!: Sequelize.HasManyRemoveAssociationsMixin<posts, postsId>
+  hasPost!: Sequelize.HasManyHasAssociationMixin<posts, postsId>
+  hasPosts!: Sequelize.HasManyHasAssociationsMixin<posts, postsId>
+  countPosts!: Sequelize.HasManyCountAssociationsMixin
   static initModel(sequelize: Sequelize.Sequelize): typeof user {
     return user.init(
       {

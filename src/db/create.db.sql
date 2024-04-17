@@ -30,6 +30,7 @@ create table if not exists "user"
     address       varchar(42),
     last_login_at timestamp,
     avatar        varchar
+    posts         integer    default 0,
 );
 
 alter table "user"
@@ -164,3 +165,25 @@ alter table token
 create unique index if not exists access_token_id_uindex
     on token (id);
 
+create table if not exists posts 
+(
+    id        serial
+        constraint posts_pk 
+            primary key,
+    user_id integer not null
+        constraint posts_user_id_fk
+        references "user",
+    title text not null,
+    content text,
+    image_url varchar not null
+    views         integer    default 0,
+    likes         integer    default 0,
+    create_at timestamp default now(),
+    update_at timestamp,
+);
+
+alter table posts
+    owner to postgres;
+
+create unique index if not exists posts_id_uindex
+    on posts (id);

@@ -22,6 +22,8 @@ import type {
 } from './transaction'
 import { user as _user } from './user'
 import type { userAttributes, userCreationAttributes } from './user'
+import { posts as _posts } from './posts'
+import type { postsAttributes, postsCreationAttributes } from './posts'
 
 export {
   _image as image,
@@ -30,7 +32,8 @@ export {
   _synchronize as synchronize,
   _token as token,
   _transaction as transaction,
-  _user as user
+  _user as user,
+  _posts as posts
 }
 
 export type {
@@ -47,7 +50,9 @@ export type {
   transactionAttributes,
   transactionCreationAttributes,
   userAttributes,
-  userCreationAttributes
+  userCreationAttributes,
+  postsAttributes,
+  postsCreationAttributes
 }
 
 export function initModels(sequelize: Sequelize) {
@@ -58,6 +63,7 @@ export function initModels(sequelize: Sequelize) {
   const token = _token.initModel(sequelize)
   const transaction = _transaction.initModel(sequelize)
   const user = _user.initModel(sequelize)
+  const posts = _posts.initModel(sequelize)
 
   nft_transaction.belongsTo(nft, { as: 'nft', foreignKey: 'nft_id' })
   nft.hasMany(nft_transaction, { as: 'nft_transactions', foreignKey: 'nft_id' })
@@ -99,6 +105,8 @@ export function initModels(sequelize: Sequelize) {
     as: 'to_transactions',
     foreignKey: 'user_id_to'
   })
+  posts.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasMany(posts, { as: 'posts', foreignKey: 'user_id' })
 
   return {
     image: image,
@@ -107,6 +115,7 @@ export function initModels(sequelize: Sequelize) {
     synchronize: synchronize,
     token: token,
     transaction: transaction,
-    user: user
+    user: user,
+    posts: posts
   }
 }
