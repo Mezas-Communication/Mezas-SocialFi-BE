@@ -1,8 +1,8 @@
+import { OutputDetailPosts } from '@app'
 import { type Option } from '@constants'
 import { Constant, logError, onError, onSuccess } from '@constants'
 import { AuthMiddleware } from '@middlewares'
 import { Singleton } from '@providers'
-import type { IPosts } from '@schemas'
 import { Request as ExpressRequest } from 'express'
 import {
   Controller,
@@ -26,15 +26,15 @@ const { NETWORK_STATUS_MESSAGE } = Constant
 @Middlewares([AuthMiddleware])
 export class UsersController extends Controller {
   /**
-   * Retrieves the user profile information based on the provided Ethereum address.
+   * Retrieves the details of a specific posts with the given slug.
    * @param {ExpressRequest} req - The Express request object.
-   * @param {string} address - The Ethereum address of the user to retrieve information for.
+   * @param {string} slug - The slug of the posts to retrieve.
    * @returns {Promise<Option<IPosts>>} - A Promise that resolves to an Option of the IPosts object.
    * @throws {UnauthorizedError} - If the user is not authorized to access the information.
    * @throws {InternalServerError} - If there is an internal server error.
    */
   @Get('{slug}')
-  @Example<Option<IPosts>>(
+  @Example<Option<OutputDetailPosts>>(
     {
       data: {
         username: 'jonh@gmail.com',
@@ -49,15 +49,23 @@ export class UsersController extends Controller {
     },
     'User info'
   )
-  @Response<Option<IPosts>>('401', NETWORK_STATUS_MESSAGE.UNAUTHORIZED, {
-    success: false,
-    message: NETWORK_STATUS_MESSAGE.UNAUTHORIZED
-  })
-  @Response<Option<IPosts>>('404', NETWORK_STATUS_MESSAGE.NOT_FOUND, {
-    success: false,
-    message: NETWORK_STATUS_MESSAGE.NOT_FOUND
-  })
-  @Response<Option<IPosts>>(
+  @Response<Option<OutputDetailPosts>>(
+    '401',
+    NETWORK_STATUS_MESSAGE.UNAUTHORIZED,
+    {
+      success: false,
+      message: NETWORK_STATUS_MESSAGE.UNAUTHORIZED
+    }
+  )
+  @Response<Option<OutputDetailPosts>>(
+    '404',
+    NETWORK_STATUS_MESSAGE.NOT_FOUND,
+    {
+      success: false,
+      message: NETWORK_STATUS_MESSAGE.NOT_FOUND
+    }
+  )
+  @Response<Option<OutputDetailPosts>>(
     '500',
     NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR,
     {
@@ -68,7 +76,7 @@ export class UsersController extends Controller {
   public async detailPosts(
     @Request() req: ExpressRequest,
     @Path() slug: string
-  ): Promise<Option<IPosts>> {
+  ): Promise<Option<OutputDetailPosts>> {
     try {
       const res = await Singleton.getPostsInstance().detailPosts(slug)
       return onSuccess(res)
@@ -77,4 +85,65 @@ export class UsersController extends Controller {
       return onError(error, this)
     }
   }
+
+  // /**
+  //  * Uploads an avatar to the server and returns a response object.
+  //  * @param {ExpressRequest} req - The Express request object.
+  //  * @param {Express.Multer.File} image - The image file to upload.
+  //  * @returns {Promise<Option<OutputUpload>>} - A Promise that resolves to an Option of the OutputUpload object.
+  //  * @throws {UnauthorizedError} - If the user is not authorized to access the information.
+  //  * @throws {InternalServerError} - If there is an internal server error.
+  //  */
+  // @Post('posts')
+  // @Example<Option<any>>(
+  //   {
+  //     data: '0xad6c1b10d79a8fd21b547cb74e4239d2f5e79105f2f1d6289306e988e5bf2c6a',
+  //     success: true,
+  //     message: 'Success',
+  //     count: 1
+  //   },
+  //   'Success'
+  // )
+  // @Response<Option<any>>(
+  //   '422',
+  //   NETWORK_STATUS_MESSAGE.VALIDATE_ERROR,
+  //   {
+  //     success: false,
+  //     message: NETWORK_STATUS_MESSAGE.VALIDATE_ERROR
+  //   }
+  // )
+  // @Response<Option<any>>('401', NETWORK_STATUS_MESSAGE.UNAUTHORIZED, {
+  //   success: false,
+  //   message: NETWORK_STATUS_MESSAGE.UNAUTHORIZED
+  // })
+  // @Response<Option<any>>(
+  //   '500',
+  //   NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR,
+  //   {
+  //     success: false,
+  //     message: NETWORK_STATUS_MESSAGE.INTERNAL_SERVER_ERROR
+  //   }
+  // )
+  // public async uploadPosts(
+  //   @Request() req: ExpressRequest,
+  //   @BodyProp() body: InputUploadPosts
+  // ): Promise<Option<any>> {
+  //   try {
+  //     // /**
+  //     //  * Validates the posts.
+  //     //  */
+  //     // const imageValidate = await uploadPostsValidate(image.buffer)
+  //     // if (imageValidate) {
+  //     //   throw new ErrorHandler(
+  //     //     imageValidate,
+  //     //     NETWORK_STATUS_MESSAGE.VALIDATE_ERROR
+  //     //   )
+  //     // }
+  //     const res = await Singleton.getPostsInstance().uploadPosts(body)
+  //     return onSuccess(res)
+  //   } catch (error: any) {
+  //     logError(error, req)
+  //     return onError(error, this)
+  //   }
+  // }
 }

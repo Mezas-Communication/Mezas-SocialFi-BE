@@ -175,7 +175,7 @@ create table if not exists posts
         references "user",
     title text not null,
     content text,
-    image_url varchar not null
+    image_url varchar
     views         integer    default 0,
     likes         integer    default 0,
     create_at timestamp default now(),

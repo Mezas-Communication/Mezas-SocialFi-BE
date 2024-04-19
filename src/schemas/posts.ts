@@ -4,8 +4,8 @@ import { user, userId } from './user'
 
 export interface postsAttributes {
   id: number
-  user_id?: number
-  title?: string
+  user_id: number
+  title: string
   content?: string
   image_url?: string
   views?: number
@@ -37,14 +37,14 @@ export class posts
   implements postsAttributes
 {
   id!: number
-  user_id?: number | undefined
-  title?: string | undefined
-  content?: string | undefined
-  image_url?: string | undefined
-  views?: number | undefined
-  likes?: number | undefined
-  create_at?: Date | undefined
-  update_at?: Date | undefined
+  user_id!: number
+  title!: string
+  content?: string
+  image_url?: string
+  views?: number
+  likes?: number
+  create_at?: Date
+  update_at?: Date
 
   // posts belongsTo user via user_id
   user!: user
@@ -78,7 +78,7 @@ export class posts
         },
         image_url: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
         views: {
           type: DataTypes.INTEGER,
