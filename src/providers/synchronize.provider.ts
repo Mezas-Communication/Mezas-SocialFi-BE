@@ -158,30 +158,33 @@ const synchronizeNFT = async (
   /**
    * Retrieves the past transfer events and update events for the NFT contract using the provided configuration.
    */
-  const [eventTransferNFT, eventUpdateNFT] = await Promise.all([
-    nftContract.getPastEvents(
-      Constant.CONTRACT_EVENT.TRANSFER,
-      getPastEventsConfig
-    ),
+  const [
+    // eventTransferNFT,
+    eventUpdateNFT
+  ] = await Promise.all([
+    // nftContract.getPastEvents(
+    //   Constant.CONTRACT_EVENT.TRANSFER,
+    //   getPastEventsConfig
+    // ),
     nftContract.getPastEvents(
       Constant.CONTRACT_EVENT.UPDATE,
       getPastEventsConfig
     )
   ])
-  listTxHash.push(...eventTransferNFT.map(e => e.transactionHash))
+  // listTxHash.push(...eventTransferNFT.map(e => e.transactionHash))
   listTxHash.push(...eventUpdateNFT.map(e => e.transactionHash))
 
   if (eventUpdateNFT.length > 0) {
     await synchronizeUpdateNFT(eventUpdateNFT, synchronize_id)
   }
 
-  if (eventTransferNFT.length > 0) {
-    await synchronizeTransferAndMintNFT(
-      eventTransferNFT,
-      synchronize_id,
-      is_test
-    )
-  }
+  // if (eventTransferNFT.length > 0) {
+  //   await synchronizeTransferAndMintNFT(
+  //     eventTransferNFT,
+  //     synchronize_id,
+  //     is_test
+  //   )
+  // }
 }
 
 const synchronizeUpdateNFT = async (
@@ -351,183 +354,183 @@ const synchronizeUpdateNFT = async (
   )
 }
 
-const synchronizeTransferAndMintNFT = async (
-  eventTransferNFT: EventData[],
-  synchronize_id: number,
-  is_test = false
-) => {
-  /**
-   * If the code is running in a test environment and the length of the eventTransferNFT array is greater than 2,
-   * remove all elements from index 2 to the end of the array.
-   * @param {boolean} is_test - a boolean indicating whether the code is running in a test environment
-   * @param {Array} eventTransferNFT - an array of events
-   * @returns None
-   */
-  if (is_test && eventTransferNFT.length > 2) {
-    eventTransferNFT.splice(2, eventTransferNFT.length - 2)
-  }
-  logger.info(
-    `[onJobGetDataFromSmartContract] Start synchronize:${eventTransferNFT.length} NFT transfer events`
-  )
-  /**
-   * Sorts and maps an array of transfer NFT events to a new array of objects with additional properties.
-   */
-  const listTransferNFT = eventTransferNFT
-    .sort(sortByBlockNumberAndTransactionIndex)
-    .map(e => ({
-      tokenId: e.returnValues.tokenId,
-      from: e.returnValues.from,
-      to: e.returnValues.to,
-      ...e
-    }))
-  /**
-   * Loops through a list of transferNFT objects and updates the corresponding SQL tables
-   * with the relevant information.
-   */
-  for (const transferNFT of listTransferNFT) {
-    /**
-     * Retrieves the transaction result for a given transfer of an NFT.
-     */
-    const txResult = await web3.eth.getTransaction(transferNFT.transactionHash)
-    /**
-     * Retrieves the timestamp of the block in which the given transaction was included.
-     */
-    const txTimestamp = await web3.eth.getBlock(
-      txResult.blockNumber ? txResult.blockNumber : 'latest'
-    )
-    /**
-     * Finds or creates a user with the given address from and to.
-     */
-    const [userFrom] = await user.findOrCreate({
-      where: {
-        address: transferNFT.from.toLowerCase()
-      }
-    })
-    const [userTo] = await user.findOrCreate({
-      where: {
-        address: transferNFT.to.toLowerCase()
-      }
-    })
-    /**
-     * Finds or creates a transaction in the database with the given transaction hash and
-     * adds the transaction details to the database.
-     */
+// const synchronizeTransferAndMintNFT = async (
+//   eventTransferNFT: EventData[],
+//   synchronize_id: number,
+//   is_test = false
+// ) => {
+//   /**
+//    * If the code is running in a test environment and the length of the eventTransferNFT array is greater than 2,
+//    * remove all elements from index 2 to the end of the array.
+//    * @param {boolean} is_test - a boolean indicating whether the code is running in a test environment
+//    * @param {Array} eventTransferNFT - an array of events
+//    * @returns None
+//    */
+//   if (is_test && eventTransferNFT.length > 2) {
+//     eventTransferNFT.splice(2, eventTransferNFT.length - 2)
+//   }
+//   logger.info(
+//     `[onJobGetDataFromSmartContract] Start synchronize:${eventTransferNFT.length} NFT transfer events`
+//   )
+//   /**
+//    * Sorts and maps an array of transfer NFT events to a new array of objects with additional properties.
+//    */
+//   const listTransferNFT = eventTransferNFT
+//     .sort(sortByBlockNumberAndTransactionIndex)
+//     .map(e => ({
+//       tokenId: e.returnValues.tokenId,
+//       from: e.returnValues.from,
+//       to: e.returnValues.to,
+//       ...e
+//     }))
+//   /**
+//    * Loops through a list of transferNFT objects and updates the corresponding SQL tables
+//    * with the relevant information.
+//    */
+//   for (const transferNFT of listTransferNFT) {
+//     /**
+//      * Retrieves the transaction result for a given transfer of an NFT.
+//      */
+//     const txResult = await web3.eth.getTransaction(transferNFT.transactionHash)
+//     /**
+//      * Retrieves the timestamp of the block in which the given transaction was included.
+//      */
+//     const txTimestamp = await web3.eth.getBlock(
+//       txResult.blockNumber ? txResult.blockNumber : 'latest'
+//     )
+//     /**
+//      * Finds or creates a user with the given address from and to.
+//      */
+//     const [userFrom] = await user.findOrCreate({
+//       where: {
+//         address: transferNFT.from.toLowerCase()
+//       }
+//     })
+//     const [userTo] = await user.findOrCreate({
+//       where: {
+//         address: transferNFT.to.toLowerCase()
+//       }
+//     })
+//     /**
+//      * Finds or creates a transaction in the database with the given transaction hash and
+//      * adds the transaction details to the database.
+//      */
 
-    let transactionSql = await transaction.findOne({
-      where: {
-        transaction_hash: transferNFT.transactionHash
-      }
-    })
-    const transactionData: Omit<ITransaction, 'id'> = {
-      transaction_hash: transferNFT.transactionHash,
-      block_hash: transferNFT.blockHash,
-      block_number: transferNFT.blockNumber,
-      user_id_from: userFrom.id,
-      user_id_to: userTo.id,
-      synchronize_id,
-      value: txResult.value,
-      create_at: new Date(parseInt(`${txTimestamp.timestamp}`) * 1000)
-    }
-    if (!transactionSql) {
-      transactionSql = await transaction.create(transactionData)
-    } else {
-      await transactionSql.update({
-        ...(({ create_at, ...object }) => object)(transactionData),
-        update_at: new Date()
-      })
-    }
-    /**
-     * Finds a single NFT in the database based on the provided token ID.
-     */
-    let nftSql = await nft.findOne({
-      where: {
-        token_id: parseInt(transferNFT.tokenId)
-      }
-    })
+//     let transactionSql = await transaction.findOne({
+//       where: {
+//         transaction_hash: transferNFT.transactionHash
+//       }
+//     })
+//     const transactionData: Omit<ITransaction, 'id'> = {
+//       transaction_hash: transferNFT.transactionHash,
+//       block_hash: transferNFT.blockHash,
+//       block_number: transferNFT.blockNumber,
+//       user_id_from: userFrom.id,
+//       user_id_to: userTo.id,
+//       synchronize_id,
+//       value: txResult.value,
+//       create_at: new Date(parseInt(`${txTimestamp.timestamp}`) * 1000)
+//     }
+//     if (!transactionSql) {
+//       transactionSql = await transaction.create(transactionData)
+//     } else {
+//       await transactionSql.update({
+//         ...(({ create_at, ...object }) => object)(transactionData),
+//         update_at: new Date()
+//       })
+//     }
+//     /**
+//      * Finds a single NFT in the database based on the provided token ID.
+//      */
+//     let nftSql = await nft.findOne({
+//       where: {
+//         token_id: parseInt(transferNFT.tokenId)
+//       }
+//     })
 
-    const uri = await nftContract.methods.tokenURI(transferNFT.tokenId).call()
-    try {
-      const metadata = await axios.get(uri)
-      /**
-       * If nftSql is not defined, create a new NFT in the database with the given transferNFT data.
-       * Otherwise, update the owner of the existing NFT in the database with the new owner from transferNFT.
-       */
-      if (!nftSql) {
-        nftSql = await nft.create({
-          token_id: parseInt(transferNFT.tokenId),
-          metadata: metadata.data,
-          user_id: userTo.id,
-          create_at: new Date(parseInt(`${txTimestamp.timestamp}`) * 1000),
-          status: NFTStatus.COMPLETED,
-          slug: getSlug(transferNFT.tokenId)
-        })
-      } else {
-        nftSql.user_id = userTo.id
-        nftSql.status = NFTStatus.COMPLETED
-        nftSql.update_at = new Date()
-        nftSql.slug = getSlug(transferNFT.tokenId)
-        await nftSql.save()
-      }
-      /**
-       * Finds or creates a new NFT transaction in the database.
-       */
+//     const uri = await nftContract.methods.tokenURI(transferNFT.tokenId).call()
+//     try {
+//       const metadata = await axios.get(uri)
+//       /**
+//        * If nftSql is not defined, create a new NFT in the database with the given transferNFT data.
+//        * Otherwise, update the owner of the existing NFT in the database with the new owner from transferNFT.
+//        */
+//       if (!nftSql) {
+//         nftSql = await nft.create({
+//           token_id: parseInt(transferNFT.tokenId),
+//           metadata: metadata.data,
+//           user_id: userTo.id,
+//           create_at: new Date(parseInt(`${txTimestamp.timestamp}`) * 1000),
+//           status: NFTStatus.COMPLETED,
+//           slug: getSlug(transferNFT.tokenId)
+//         })
+//       } else {
+//         nftSql.user_id = userTo.id
+//         nftSql.status = NFTStatus.COMPLETED
+//         nftSql.update_at = new Date()
+//         nftSql.slug = getSlug(transferNFT.tokenId)
+//         await nftSql.save()
+//       }
+//       /**
+//        * Finds or creates a new NFT transaction in the database.
+//        */
 
-      const metadataWithVersion = {
-        ...metadata.data,
-        ...(transferNFT.from.toLowerCase() === Constant.ZERO_ADDRESS
-          ? {
-              version: '1',
-              updateAt: txTimestamp.timestamp
-            }
-          : {})
-      }
-      const [, is_nft_transaction_created] = await nft_transaction.findOrCreate(
-        {
-          where: {
-            nft_id: nftSql.id,
-            transaction_id: transactionSql.id
-          },
-          defaults: {
-            nft_id: nftSql.id,
-            transaction_id: transactionSql.id,
-            event:
-              /**
-               * Determines the type of contract event based on the `from` address of a transferNFT object.
-               * If the `from` address is the zero address, the event is a mint. Otherwise, it is a transfer.
-               */
-              transferNFT.from.toLowerCase() === Constant.ZERO_ADDRESS
-                ? Constant.CONTRACT_EVENT.MINT
-                : Constant.CONTRACT_EVENT.TRANSFER,
-            metadata: metadataWithVersion,
-            user_id: userTo.id
-          }
-        }
-      )
+//       const metadataWithVersion = {
+//         ...metadata.data,
+//         ...(transferNFT.from.toLowerCase() === Constant.ZERO_ADDRESS
+//           ? {
+//               version: '1',
+//               updateAt: txTimestamp.timestamp
+//             }
+//           : {})
+//       }
+//       const [, is_nft_transaction_created] = await nft_transaction.findOrCreate(
+//         {
+//           where: {
+//             nft_id: nftSql.id,
+//             transaction_id: transactionSql.id
+//           },
+//           defaults: {
+//             nft_id: nftSql.id,
+//             transaction_id: transactionSql.id,
+//             event:
+//               /**
+//                * Determines the type of contract event based on the `from` address of a transferNFT object.
+//                * If the `from` address is the zero address, the event is a mint. Otherwise, it is a transfer.
+//                */
+//               transferNFT.from.toLowerCase() === Constant.ZERO_ADDRESS
+//                 ? Constant.CONTRACT_EVENT.MINT
+//                 : Constant.CONTRACT_EVENT.TRANSFER,
+//             metadata: metadataWithVersion,
+//             user_id: userTo.id
+//           }
+//         }
+//       )
 
-      if (!is_nft_transaction_created) {
-        await nft_transaction.update(
-          {
-            metadata: metadataWithVersion,
-            user_id: userTo.id
-          },
-          {
-            where: {
-              nft_id: nftSql.id,
-              transaction_id: transactionSql.id
-            }
-          }
-        )
-      }
-    } catch (errorUri: any) {
-      logger.error(
-        `[onJobGetDataFromSmartContract][listTransferNFT][metadata]${errorUri.message}`
-      )
-    }
-  }
-  logger.info(
-    `[onJobGetDataFromSmartContract]End synchronize:${listTransferNFT.length} NFT transfer events`
-  )
-}
+//       if (!is_nft_transaction_created) {
+//         await nft_transaction.update(
+//           {
+//             metadata: metadataWithVersion,
+//             user_id: userTo.id
+//           },
+//           {
+//             where: {
+//               nft_id: nftSql.id,
+//               transaction_id: transactionSql.id
+//             }
+//           }
+//         )
+//       }
+//     } catch (errorUri: any) {
+//       logger.error(
+//         `[onJobGetDataFromSmartContract][listTransferNFT][metadata]${errorUri.message}`
+//       )
+//     }
+//   }
+//   logger.info(
+//     `[onJobGetDataFromSmartContract]End synchronize:${listTransferNFT.length} NFT transfer events`
+//   )
+// }
 
 const jobGetDataFromSmartContract = (_date: Date) => {
   onJobGetDataFromSmartContract().catch(error => {
