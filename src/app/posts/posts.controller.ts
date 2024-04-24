@@ -123,8 +123,7 @@ export class PostsController extends Controller {
     @Body() body: InputUploadPosts
   ): Promise<Option<any>> {
     try {
-      // const address = req.headers.address as string
-      const address = '0x2d37599c7b05aae0e22f33482637f5d84213f07a'
+      const address = req.headers.address as string
       const res = await Singleton.getPostsInstance().uploadPosts(body, address)
       return onSuccess(res)
     } catch (error: any) {
